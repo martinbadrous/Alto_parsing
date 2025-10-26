@@ -1,2 +1,8 @@
-# Alto_parsing
-This Repo is used to extract the coordinates of elements of content inside an ALTO file and then export it into a txt file
+# Alto Parsing
+Repository for parsing Alto XML files.
+## Description
+This project parses Alto XML files to extract and process musical data.
+## Usage
+Instructions on how to use the scripts.
+## Last Updated
+2025-10-26 13:52 UTC
