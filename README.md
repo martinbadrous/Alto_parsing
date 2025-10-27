@@ -1,26 +1,58 @@
-# Alto_parsing  
-**Extracting content coordinates from ALTO XML files → structured text output**
+# 🧾 Alto_parsing
 
-## Martin Badrous  
-Computer Vision & Image Processing Engineer  
-GitHub: [martinbadrous/Alto_parsing](https://github.com/martinbadrous/Alto_parsing)
+**Extract content and coordinates from ALTO XML into simple text outputs.**  
+Created and maintained by **[Martin Badrous](https://github.com/martinbadrous)**
 
 ---
 
-## 📌 Overview  
-This repository provides a lightweight Python utility to parse ALTO XML files (often used in OCR/text-layout tasks) and extract the coordinates of content elements (text blocks, words, lines) into plain text files (with bounding box information).  
-It is designed for quick experiments or preprocessing pipelines where you need spatial location of textual elements.
+## Table of Contents
+- [Overview](#overview)
+- [Features](#features)
+- [Repository Structure](#repository-structure)
+- [Installation](#installation)
+- [Quick Start](#quick-start)
+- [Usage](#usage)
+- [Examples](#examples)
+- [How It Works](#how-it-works)
+- [Troubleshooting](#troubleshooting)
+- [Roadmap](#roadmap)
+- [Contributing](#contributing)
+- [License](#license)
+- [Author](#author)
 
 ---
 
-## 🧰 Features  
-- Parse ALTO XML files to retrieve text elements + their bounding-boxes.  
-- Export results into simple `.txt` files (e.g., one element per line: *text | x-min y-min x-max y-max*).  
-- Supports two modes:  
-  - **Bounding-box mode** → full extents of each element.  
-  - **Top-left point mode** → only the top-left corner, for simpler downstream usage.  
-- Minimal dependencies → easy to incorporate into larger pipelines.
+## Overview
+
+`Alto_parsing` is a lightweight Python utility for **parsing ALTO XML** (a common OCR output format) and exporting either:
+- **Bounding boxes** for text elements (x_min, y_min, x_max, y_max), or
+- **Top-left coordinates** (x, y)
+
+…alongside the **recognized text**. It’s handy for **document analysis, layout processing, OCR post-processing**, and building datasets for ML.
 
 ---
 
-## 🗂 Repository Structure  
+## Features
+
+- ✅ Parse ALTO files to extract **text** + **geometry**
+- ✅ Two output modes: **bounding-box** or **top-left**
+- ✅ Simple `.txt` outputs for easy downstream use
+- ✅ Minimal dependencies; runs on standard Python
+- ✅ Works for single files or batch folders
+
+---
+
+## Repository Structure
+
+```bash
+Alto_parsing/
+├── ALTO_PARSIN_TO_TXT/                # Sample data & demo outputs (you can replace with your own)
+│   ├── 00023.xml                      # Example ALTO input
+│   ├── bounding_box.txt               # Example output (bounding-box mode)
+│   └── top_left_point_position.txt    # Example output (top-left mode)
+│
+├── ALTO_PARSIN_TO_TXT.py              # Batch parser (folder in → folder out)
+├── Alto_to_txt_boundingbox.py         # Single-file parser (bounding-box out)
+│
+├── requirements.txt                   # Optional deps (can be empty if stdlib only)
+└── README.md                          # This file
