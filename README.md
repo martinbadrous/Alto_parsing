@@ -48,16 +48,14 @@ It’s designed for **document analysis**, **layout processing**, **OCR post-pro
 
 ```bash
 Alto_parsing/
-├── ALTO_PARSIN_TO_TXT/                # Example data & demo outputs
-│   ├── 00023.xml                      # Example ALTO input
-│   ├── bounding_box.txt               # Example bounding-box output
-│   └── top_left_point_position.txt    # Example top-left output
-│
-├── ALTO_PARSIN_TO_TXT.py              # Batch parser script (folder → folder)
-├── Alto_to_txt_boundingbox.py         # Single-file parser script
-│
-├── requirements.txt                   # Optional deps
-└── README.md                          # This file
+├── 00023.xml                    # Example ALTO input (trimmed for demos)
+├── ALTO_PARSIN_TO_TXT.py        # Batch parser CLI (directory or single file)
+├── Alto_to_txt_boundingbox.py   # Thin single-file wrapper around the CLI
+├── alto_parser.py               # Shared parsing utilities used by the CLIs
+├── bounding_box.txt             # Example bounding-box output for 00023.xml
+├── top_left_point_position.txt  # Example top-left output for 00023.xml
+├── requirements.txt             # Optional deps (standard library by default)
+└── README.md                    # This file
 ```
 
 ---
@@ -83,13 +81,13 @@ pip install -r requirements.txt
 pip install lxml
 
 # 5. Parse a single ALTO file (Bounding Box mode)
-python3 Alto_to_txt_boundingbox.py   --input ./ALTO_PARSIN_TO_TXT/00023.xml   --output ./ALTO_PARSIN_TO_TXT/bounding_box.txt
+python3 Alto_to_txt_boundingbox.py   00023.xml   bounding_box.txt
 
 # 6. Parse a folder of ALTO files (Batch mode)
-python3 ALTO_PARSIN_TO_TXT.py   --indir ./ALTO_PARSIN_TO_TXT   --outdir ./ALTO_PARSIN_TO_TXT/output   --mode bounding_box   # or: top_left
+python3 ALTO_PARSIN_TO_TXT.py   --indir ./scans/alto_xmls   --outdir ./scans/parsed_txts   --mode bounding_box
 
 # 7. View output
-cat ./ALTO_PARSIN_TO_TXT/output/00023.txt
+head ./scans/parsed_txts/00023.txt
 ```
 
 ---
@@ -102,16 +100,18 @@ cat ./ALTO_PARSIN_TO_TXT/output/00023.txt
 <String CONTENT="World" HPOS="170" VPOS="50" WIDTH="45" HEIGHT="15"/>
 ```
 
+Fields are tab-separated by default (use `--separator` to change this).
+
 **Bounding-box Output:**
 ```
-Hello | 120 50 155 65
-World | 170 50 215 65
+Hello   120     50      155     65
+World   170     50      215     65
 ```
 
 **Top-left Output:**
 ```
-Hello | 120 50
-World | 170 50
+Hello   120     50
+World   170     50
 ```
 
 ---
@@ -146,11 +146,14 @@ World | 170 50
 ## Example Workflow
 
 ```bash
-# Parse all ALTO XMLs in a folder
-python3 ALTO_PARSIN_TO_TXT.py   --indir ./scans/alto_xmls   --outdir ./scans/parsed_txts   --mode bounding_box
+# Parse all ALTO XMLs in a folder (writes ./scans/alto_xmls/parsed by default)
+python3 ALTO_PARSIN_TO_TXT.py --indir ./scans/alto_xmls --mode top_left
+
+# Or send the result to a custom directory
+python3 ALTO_PARSIN_TO_TXT.py --indir ./scans/alto_xmls --outdir ./outputs --mode bounding_box
 
 # Inspect results
-head ./scans/parsed_txts/page_001.txt
+head ./outputs/page_001.txt
 ```
 
 ---

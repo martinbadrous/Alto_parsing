@@ -1,0 +1,3 @@
+# The scripts rely solely on the Python standard library.
+# Install lxml manually if you want faster XML parsing:
+# lxml
